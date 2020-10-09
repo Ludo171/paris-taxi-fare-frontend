@@ -3,14 +3,16 @@ import "./Button.scss";
 
 interface IProps {
   label: string;
+  icon?: React.ReactNode;
   onClick: () => void;
 }
 
-const Button: React.FC<IProps> = ({ label, onClick }: IProps) => {
+const Button: React.FC<IProps> = ({ label, icon, onClick }: IProps) => {
   return (
     <button className="styled-button" onClick={onClick}>
       {label}
-    </button>
+      {icon ? icon : null}
+    </button >
   );
 };
 

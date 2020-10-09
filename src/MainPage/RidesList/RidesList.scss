@@ -22,5 +22,20 @@
     flex-direction: column;
     overflow-y: scroll;
     padding: 0;
+  
+    scrollbar-width: thin;          /* "auto" or "thin"  */
+    scrollbar-color: rgb(80, 102, 134) rgba(255, 166, 0, 0);   /* scroll thumb & track */
+    
+    -webkit-scrollbar {
+      width: 4px;               /* width of the entire scrollbar */
+    }
+    -webkit-scrollbar-track {
+      background: rgba(255, 166, 0, 0);        /* color of the tracking area */
+    }
+    -webkit-scrollbar-thumb {
+      background-color: rgb(80, 102, 134);    /* color of the scroll thumb */
+      border-radius: 5px;       /* roundness of the scroll thumb */
+      border: 3px solid rgba(255, 166, 0, 0);  /* creates padding around scroll thumb */
+    }
   }
 }

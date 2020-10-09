@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import "./Select.scss";
 
 interface IProps {
@@ -10,10 +9,7 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = ({ label, items, value = "", onChange }: IProps) => {
-  const [text, setText] = useState(value);
-
   const update = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setText(event.target.value);
     onChange(event.target.value);
   };
 

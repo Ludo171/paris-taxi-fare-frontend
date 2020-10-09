@@ -6,28 +6,37 @@
   }
 }
 
-@mixin styled-button-custom-colors($border-color, $background-color) {
+@mixin styled-button-custom-colors($defaultBackgroundColor, $hoverBackgroundColor, $borderColor) {
   .styled-button {
-      border-color: $border-color;
+      background-color: $defaultBackgroundColor;
+      border-color: $borderColor;
     &:hover {
-      background-color: $background-color;
-      color: set-text-color($background-color);
+      background-color: $hoverBackgroundColor;
+      color: set-text-color($hoverBackgroundColor);
     }
   }
 }
 
 .styled-button {
+  background-color: #c2daee;
+	display:inline-block;
   border-color: #7777cc;
-  font-size: large;
+  font-size: 14px;
   border-width: 1px;
-  padding: 5px;
+  padding: 10px 20px;
   border-radius: 5px;
   outline: none;
+	cursor:pointer;
   &:hover {
     background-color: #7777cc;
     color: white;
   }
   &:active {
-    transform: translateY(2px);
+    transform: translateY(1px);
   }
+
+  svg {
+    margin: 0 0 0 5px;
+  }
+  
 }

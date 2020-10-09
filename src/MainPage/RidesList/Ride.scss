@@ -1,3 +1,4 @@
+@import '../../Components/Button.scss'; 
 
 .ride-item {
   display: flex;
@@ -11,6 +12,7 @@
   margin-bottom: 5px;
   margin-left: 15px;
   margin-right: 15px;
+
   .ride-info {
     display: flex;
     flex-direction: column;
@@ -29,13 +31,21 @@
       }
     }
   }
+
+  .price-tag {
+    display: inline;
+    background-color: #28ddab;
+    border-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0;
+    font-size: large;
+  }
+
+  @include styled-button-custom-colors(rgb(224, 236, 240), rgb(226, 108, 108), rgb(252, 115, 115));
+
+  .styled-button {
+    margin-right: 20px;
+  }
 }
 
-.price-tag {
-  background-color: #28ddab;
-  border-color: white;
-  border-radius: 100%;
-  padding: 10px;
-  margin: 0;
-  font-size: large;
-}

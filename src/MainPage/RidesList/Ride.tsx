@@ -2,6 +2,9 @@ import * as React from "react";
 import { useState } from "react";
 import "./Ride.scss";
 import Button from "../../Components/Button";
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 interface IProps {
@@ -24,8 +27,11 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
         <label>StartTime : {info.startTime}</label>
         <label>Duration : {info.duration}</label>
       </div>
-      <div className="price-tag">{price}€</div>
-      <Button label="Delete" onClick={deleteRide} />
+      <div className="price-tag">
+        <label>Price : </label>
+        {price ? `${price}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
+      </div>
+      <Button label="Delete" icon={<FontAwesomeIcon icon={faMinusCircle} color="red" size="lg" />} onClick={deleteRide} />
     </div>
   );
 };

@@ -18,7 +18,7 @@ const NewRideForm: React.FC<IProps> = () => {
 
   return (
     <div className="new-ride-form">
-      <label className="subtitle-label">New Ride:</label>
+      <label className="subtitle-label">Add New Ride:</label>
       <div className="entries">
         <Input label="Distance" value={distance} onChange={(v) => setDistance(v)} />
         <Input label="Start time" value={startTime} onChange={(v) => setStartTime(v)} />

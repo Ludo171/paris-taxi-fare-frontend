@@ -1,10 +1,35 @@
 .styled-select {
   display: flex;
   flex-direction: row;
-  align-items: left;
+  align-items: stretch;
+  background-color: #0571af;
+  border-radius: 5px;
+  border-color: #0070cc;
+
   label {
-    color: white;
     font-size: large;
-    padding-right: 5px;
+    color: white;
+    padding: 10px;
+  }
+
+  select {
+    border-radius: 0px 5px 5px 0px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    font-size: large;
+    color: white;
+    padding: 5px 10px;
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    &:hover {
+      background-color:#2d94cf;
+      border: 1px solid #2d94cf;
+    }
+  }
+
+  select option {
+    background-color: #0562af00;
+    padding: 30px;
   }
 }
