@@ -1,29 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./RidesList.scss";
 import Ride from "./Ride";
 import Select from "../../Components/Select";
+import { fetchRides } from "../../RideApi/api";
+import { IRide } from "../../RideApi/interface";
 
 
 interface IProps { }
 
 const RidesList: React.FC<IProps> = () => {
-  const [ridesList, setRidesList] = useState([
-    { "id": 1, "distance": 2, "startTime": "2020-06-19T13:01:17.031Z", "duration": 9000 },
-    { "id": 2, "distance": 1, "startTime": "2020-06-19T12:01:17.031Z", "duration": 6000 },
-    { "id": 3, "distance": 5, "startTime": "2020-06-19T14:01:17.031Z", "duration": 7000 },
-    { "id": 1, "distance": 2, "startTime": "2020-06-19T13:01:17.031Z", "duration": 9000 },
-    { "id": 2, "distance": 1, "startTime": "2020-06-19T12:01:17.031Z", "duration": 6000 },
-    { "id": 3, "distance": 5, "startTime": "2020-06-19T14:01:17.031Z", "duration": 7000 },
-    { "id": 1, "distance": 2, "startTime": "2020-06-19T13:01:17.031Z", "duration": 9000 },
-    { "id": 2, "distance": 1, "startTime": "2020-06-19T12:01:17.031Z", "duration": 6000 },
-    { "id": 3, "distance": 5, "startTime": "2020-06-19T14:01:17.031Z", "duration": 7000 },
-    { "id": 1, "distance": 2, "startTime": "2020-06-19T13:01:17.031Z", "duration": 9000 },
-    { "id": 2, "distance": 1, "startTime": "2020-06-19T12:01:17.031Z", "duration": 6000 },
-    { "id": 3, "distance": 5, "startTime": "2020-06-19T14:01:17.031Z", "duration": 7000 },
-  ]);
-  const [sortingSelector, setSortingSelector] = useState("startTime");
+  const [ridesList, setRidesList] = useState(Array<IRide>());
+  const [sortingSelector, setSortingSelector] = useState("id");
 
-  const sortingItems = [{ value: "startTime", label: "start date" }, { value: "duration", label: "duration" }];
+  const fetchRidesList = async () => {
+    const list = await fetchRides();
+    setRidesList(list);
+  }
+
+  useEffect(() => {
+    fetchRidesList();
+  }, []);
+
+  const sortingItems = [
+    { value: "id", label: "Ride ID" },
+    { value: "startTime", label: "Start Time" },
+    { value: "duration", label: "Duration" },
+    { value: "distance", label: "Distance" },
+    { value: "price", label: "Price" }
+  ];
+
+  const sortRidesList = () => {
+    const compare = (a: string | number | Date, b: string | number | Date) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+    };
+
+    const sorted = ridesList.slice();
+    sorted.sort((a, b) => {
+      if (sortingSelector === "duration") return compare(a.duration, b.duration);
+      else if (sortingSelector === "distance") return compare(a.distance, b.distance);
+      else if (sortingSelector === "startTime") return compare(a.startTime, b.startTime);
+      return compare(a.id, b.id);
+    });
+    console.log(sorted);
+    setRidesList(sorted);
+  };
+
+  useEffect(() => {
+    console.log(`Sorting by ${sortingSelector}`);
+    sortRidesList();
+  }, [sortingSelector]);
+
 
   return (
     <div className="rides-list">
@@ -32,7 +60,7 @@ const RidesList: React.FC<IProps> = () => {
         <Select label="Sort by" value={sortingSelector} items={sortingItems} onChange={(v) => setSortingSelector(v)}></Select>
       </div>
       <ul>
-        {ridesList.map((rideInfo) => <Ride info={rideInfo} />)}
+        {ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />)}
       </ul>
     </div>
   );
