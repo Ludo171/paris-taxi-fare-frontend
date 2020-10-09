@@ -1,5 +1,5 @@
 export interface IRide {
-  id: number;
+  id: string;
   distance: number; // in Miles
   startTime: string;
   duration: number; // in SECONDS

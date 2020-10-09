@@ -5,18 +5,19 @@ import Button from "../../Components/Button";
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { deleteRide } from "../../ApiRide/api";
 
 
 interface IProps {
-  info: { id: number, distance: number, startTime: string, duration: number };
+  info: { id: string, distance: number, startTime: string, duration: number };
 }
 
 const Ride: React.FC<IProps> = ({ info }: IProps) => {
 
   const [price, setPrice] = useState(undefined);
 
-  const deleteRide = () => {
-    console.log(`Delete Ride ${info.id}`);
+  const handleDelete = async () => {
+    const deletedCount = await deleteRide(info.id);
   }
 
   return (
@@ -31,7 +32,7 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
         <label>Price : </label>
         {price ? `${price}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
       </div>
-      <Button label="Delete" icon={<FontAwesomeIcon icon={faMinusCircle} color="red" size="lg" />} onClick={deleteRide} />
+      <Button label="Delete" icon={<FontAwesomeIcon icon={faMinusCircle} color="red" size="lg" />} onClick={handleDelete} />
     </div>
   );
 };

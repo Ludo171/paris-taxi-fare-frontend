@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./RidesList.scss";
 import Ride from "./Ride";
 import Select from "../../Components/Select";
-import { fetchRides } from "../../RideApi/api";
-import { IRide } from "../../RideApi/interface";
+import { fetchAllRides } from "../../ApiRide/api";
+import { IRide } from "../../ApiRide/interface";
 
 
 interface IProps { }
@@ -13,7 +13,9 @@ const RidesList: React.FC<IProps> = () => {
   const [sortingSelector, setSortingSelector] = useState("id");
 
   const fetchRidesList = async () => {
-    const list = await fetchRides();
+    const list = await fetchAllRides();
+    console.log('Got Rides list !');
+    console.log(list);
     setRidesList(list);
   }
 
@@ -60,7 +62,7 @@ const RidesList: React.FC<IProps> = () => {
         <Select label="Sort by" value={sortingSelector} items={sortingItems} onChange={(v) => setSortingSelector(v)}></Select>
       </div>
       <ul>
-        {ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />)}
+        {ridesList ? ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />) : null}
       </ul>
     </div>
   );

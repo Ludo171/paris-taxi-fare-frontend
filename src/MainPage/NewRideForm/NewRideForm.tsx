@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./NewRideForm.scss";
 import Button from "../../Components/Button";
 import Input from "../../Components/Input";
+import { createNewRide } from "../../ApiRide/api";
 
 interface IProps { }
 
@@ -10,9 +11,8 @@ const NewRideForm: React.FC<IProps> = () => {
   const [startTime, setStartTime] = useState("");
   const [duration, setDuration] = useState("");
 
-  const submitForm = () => {
-    // TODO Validate inputs
-    // TODO call the service that will send a new Ride to the Ride API
+  const submitForm = async () => {
+    const newRide = await createNewRide({ duration, distance, startTime })
   };
 
 
