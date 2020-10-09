@@ -1,0 +1,33 @@
+@function set-text-color($color){
+  @if(lightness($color) > 70){
+    @return black;
+  } @else {
+    @return white;
+  }
+}
+
+@mixin styled-button-custom-colors($border-color, $background-color) {
+  .styled-button {
+      border-color: $border-color;
+    &:hover {
+      background-color: $background-color;
+      color: set-text-color($background-color);
+    }
+  }
+}
+
+.styled-button {
+  border-color: #7777cc;
+  font-size: large;
+  border-width: 1px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+  &:hover {
+    background-color: #7777cc;
+    color: white;
+  }
+  &:active {
+    transform: translateY(2px);
+  }
+}

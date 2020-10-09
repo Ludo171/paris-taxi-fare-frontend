@@ -1,0 +1,41 @@
+
+.ride-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffffbb;
+  border-color: #c0a4db;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
+  .ride-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:left;
+    font-size: medium;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    label {
+      margin-left: 15px;
+      font-size: medium;
+      &.underlined {
+        text-decoration: underline;
+        font-weight: bold;
+        font-size: large;
+      }
+    }
+  }
+}
+
+.price-tag {
+  background-color: #28ddab;
+  border-color: white;
+  border-radius: 100%;
+  padding: 10px;
+  margin: 0;
+  font-size: large;
+}

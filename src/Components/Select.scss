@@ -1,0 +1,10 @@
+.styled-select {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  label {
+    color: white;
+    font-size: large;
+    padding-right: 5px;
+  }
+}

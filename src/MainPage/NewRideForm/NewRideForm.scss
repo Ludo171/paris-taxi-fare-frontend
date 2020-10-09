@@ -1,0 +1,22 @@
+@import '../../Components/Button.scss'; 
+
+.new-ride-form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  background-color: #cccccc55;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  border-radius: 5px;
+
+  .entries {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-around;
+  }
+
+  @include styled-button-custom-colors(rgb(255, 126, 126), rgb(255, 134, 134));
+}

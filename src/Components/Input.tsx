@@ -1,16 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import styled from "styled-components"
+import "./Input.scss";
 
-const StyledInput = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: left;
-  label: {
-    color: white;
-    font-size: x-large;
-  };
-`;
 
 interface IProps {
   label: string;
@@ -27,10 +18,10 @@ const Input: React.FC<IProps> = ({ label, value = "", onChange }: IProps) => {
   };
 
   return (
-    <StyledInput>
-      {label ? <label>{label} :</label> : null}
+    <div className="styled-input">
+      {label ? <label>{label}</label> : null}
       <input type="text" value={text} onChange={update} />
-    </StyledInput>
+    </div>
   );
 };
 
