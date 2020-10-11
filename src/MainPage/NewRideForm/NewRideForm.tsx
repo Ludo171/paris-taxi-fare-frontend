@@ -25,7 +25,7 @@ const NewRideForm: React.FC<IProps> = () => {
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
 
   const submitForm = async () => {
-    const newRide = await createNewRide({ duration, distance, startTime });
+    const newRide = await createNewRide({ duration: (Number(duration) * 60).toString(), distance, startTime });
     if (newRide) {
       // Find insert index that will keep ridesList sorted
       let index = 0;
@@ -53,7 +53,7 @@ const NewRideForm: React.FC<IProps> = () => {
       <label className="subtitle-label">Add New Ride:</label>
       <div className="entries">
         <Input label="Distance (mi.)" value={distance} onChange={(v) => setDistance(v)} />
-        <Input label="Duration (min.)" value={duration} onChange={(v) => setDuration((Number(v) * 60).toString())} />
+        <Input label="Duration (min.)" value={duration} onChange={(v) => setDuration(v)} />
         <Button label="Submit" onClick={submitForm} />
       </div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
