@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MainPageContext } from "../MainPage";
 import "./Ride.scss";
 import Button from "../../Components/Button";
@@ -7,23 +7,38 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { deleteRide } from "../../ApiRide/api";
+import { fetchRidePrice } from "../../ApiPricing/api";
 
 
 interface IProps {
-  info: { id: string, distance: number, startTime: string, duration: number };
+  info: { id: string, distance: number, startTime: string, duration: number, price?: number };
 }
 
 const Ride: React.FC<IProps> = ({ info }: IProps) => {
 
   const { dispatch } = useContext(MainPageContext);
 
-  const [price, setPrice] = useState(undefined);
-
   const handleDelete = async () => {
     const deletedCount = await deleteRide(info.id);
     console.log(deletedCount);
     if (deletedCount) {
       dispatch({ type: 'REMOVE_RIDE', data: { rideId: info.id } });
+    }
+  }
+
+  useEffect(() => {
+    fetchPrice();
+  }, [])
+
+  const fetchPrice = async () => {
+    const ridePrice = await fetchRidePrice({
+      duration: info.duration,
+      distance: info.distance,
+      startTime: info.startTime
+    });
+    if (ridePrice) {
+      console.log(`Got price ! ${ridePrice.amount}`);
+      dispatch({ type: 'UPDATE_RIDE_PRICE', data: { rideId: info.id, newPrice: ridePrice.amount } });
     }
   }
 
@@ -37,7 +52,7 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
       </div>
       <div className="price-tag">
         <label>Price : </label>
-        {price ? `${price}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
+        {info.price ? `${info.price}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
       </div>
       <Button label="Delete" icon={<FontAwesomeIcon icon={faMinusCircle} color="red" size="lg" />} onClick={handleDelete} />
     </div>
