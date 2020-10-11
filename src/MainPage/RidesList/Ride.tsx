@@ -65,5 +65,5 @@ const getFriendlyDate = (dateStringISO: string) => {
   const date = new Date(dateStringISO);
   const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' };
 
-  return date.toLocaleDateString(undefined, options);
+  return date.toLocaleDateString('en-GB', options);
 };
