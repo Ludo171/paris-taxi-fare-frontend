@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { MainPageContext } from "../MainPage";
 import "./Ride.scss";
 import Button from "../../Components/Button";
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
@@ -14,10 +15,16 @@ interface IProps {
 
 const Ride: React.FC<IProps> = ({ info }: IProps) => {
 
+  const { dispatch } = useContext(MainPageContext);
+
   const [price, setPrice] = useState(undefined);
 
   const handleDelete = async () => {
     const deletedCount = await deleteRide(info.id);
+    console.log(deletedCount);
+    if (deletedCount) {
+      dispatch({ type: 'REMOVE_RIDE', data: { rideId: info.id } });
+    }
   }
 
   return (
