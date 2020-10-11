@@ -11,17 +11,15 @@ interface IProps {
 }
 
 const Input: React.FC<IProps> = ({ label, value = "", onChange, placeholder }: IProps) => {
-  const [text, setText] = useState(value);
 
   const update = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setText(event.target.value);
     onChange(event.target.value);
   };
 
   return (
     <div className="styled-input-group">
       {label ? <span>{label}</span> : null}
-      <input className="form-field" placeholder={placeholder} type="text" value={text} onChange={update} />
+      <input className="form-field" placeholder={placeholder} type="text" value={value} onChange={update} />
     </div>
   );
 };

@@ -1,71 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { MainPageContext } from "../MainPage";
 import "./RidesList.scss";
 import Ride from "./Ride";
 import Select from "../../Components/Select";
 import { fetchAllRides } from "../../ApiRide/api";
 import { IRide } from "../../ApiRide/interface";
+import { SORT_KEYS } from "../MainPageStore/state";
 
 
 interface IProps { }
 
 const RidesList: React.FC<IProps> = () => {
-  const [ridesList, setRidesList] = useState(Array<IRide>());
-  const [sortingSelector, setSortingSelector] = useState("id");
+  const { state, dispatch } = useContext(MainPageContext);
 
   const fetchRidesList = async () => {
     const list = await fetchAllRides();
-    console.log('Got Rides list !');
-    console.log(list);
-    setRidesList(list);
+    dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: list } });
   }
 
   useEffect(() => {
     fetchRidesList();
   }, []);
 
-  const sortingItems = [
-    { value: "id", label: "Ride ID" },
-    { value: "startTime", label: "Start Time" },
-    { value: "duration", label: "Duration" },
-    { value: "distance", label: "Distance" },
-    { value: "price", label: "Price" }
-  ];
-
-  const sortRidesList = () => {
-    const compare = (a: string | number | Date, b: string | number | Date) => {
-      if (a < b) return -1;
-      if (a > b) return 1;
-      return 0;
-    };
-
-    const sorted = ridesList.slice();
-    sorted.sort((a, b) => {
-      if (sortingSelector === "duration") return compare(a.duration, b.duration);
-      else if (sortingSelector === "distance") return compare(a.distance, b.distance);
-      else if (sortingSelector === "startTime") return compare(a.startTime, b.startTime);
-      return compare(a.id, b.id);
-    });
-    console.log(sorted);
-    setRidesList(sorted);
-  };
-
   useEffect(() => {
-    console.log(`Sorting by ${sortingSelector}`);
-    sortRidesList();
-  }, [sortingSelector]);
+    console.log(`New sort key ! ${state.sortKey}`);
+    const sorted = sortListBy(state.ridesList, state.sortKey);
+    dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: sorted } });
+  }, [state.sortKey]);
 
 
   return (
     <div className="rides-list">
       <div className="list-head">
         <label className="subtitle-label">Rides List: </label>
-        <Select label="Sort by" value={sortingSelector} items={sortingItems} onChange={(v) => setSortingSelector(v)}></Select>
+        <Select label="Sort by" value={state.sortKey} items={SORT_KEYS}
+          onChange={(v) => {
+            dispatch({ type: 'UPDATE_SORT_KEY', data: { sortKey: v.toString() } });
+          }}></Select>
       </div>
       <ul>
-        {ridesList ? ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />) : null}
+        {state.ridesList ? state.ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />) : null}
       </ul>
     </div>
   );
 };
 
 export default RidesList;
+
+
+const sortListBy = (ridesList: Array<IRide>, sortAttribute: string) => {
+  const compare = (a: string | number | Date, b: string | number | Date) => {
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+  };
+
+  const sorted = ridesList.slice();
+  sorted.sort((a, b) => {
+    if (sortAttribute === "duration") return compare(a.duration, b.duration);
+    else if (sortAttribute === "distance") return compare(a.distance, b.distance);
+    else if (sortAttribute === "startTime") return compare(a.startTime, b.startTime);
+    return compare(a.id, b.id);
+  });
+
+  return sorted;
+};
