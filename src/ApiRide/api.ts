@@ -23,6 +23,8 @@ export const fetchAllRides = async () => {
 
 export const createNewRide = async (newRideInfo: { duration: string, distance: string, startTime: string }) => {
   const ride = parseNewRide(newRideInfo);
+  if (!ride) return;
+
   const url = `/rides`;
   const requestOptions = {
     method: 'POST',
@@ -35,10 +37,9 @@ export const createNewRide = async (newRideInfo: { duration: string, distance: s
     .then(ride => {
       return adaptRide(ride);
     })
-    .catch(err => console.error(err));
+    .catch(err => { console.error(err) });
 
   return newRide;
-
 }
 
 export const deleteRide = async (rideId: string) => {
@@ -57,6 +58,5 @@ export const deleteRide = async (rideId: string) => {
     .catch(err => console.error(err));
 
   return newRide;
-
 }
 
