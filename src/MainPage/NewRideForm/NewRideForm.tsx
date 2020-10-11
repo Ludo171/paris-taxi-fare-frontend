@@ -5,6 +5,15 @@ import Button from "../../Components/Button";
 import Input from "../../Components/Input";
 import { createNewRide } from "../../ApiRide/api";
 import { IRide } from "../../ApiRide/interface";
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 interface IProps { }
 
@@ -13,6 +22,7 @@ const NewRideForm: React.FC<IProps> = () => {
   const [distance, setDistance] = useState("");
   const [startTime, setStartTime] = useState("");
   const [duration, setDuration] = useState("");
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
 
   const submitForm = async () => {
     const newRide = await createNewRide({ duration, distance, startTime });
@@ -28,20 +38,51 @@ const NewRideForm: React.FC<IProps> = () => {
       setDistance("");
       setStartTime("");
       setDuration("");
+      setSelectedDate(new Date());
     }
   };
 
+  const handleDateChange = (date: MaterialUiPickersDate, value?: string | null | undefined) => {
+    setSelectedDate(date);
+    if (date)
+      setStartTime(date.toISOString());
+  };
 
   return (
     <div className="new-ride-form">
       <label className="subtitle-label">Add New Ride:</label>
       <div className="entries">
-        <Input label="Distance" value={distance} onChange={(v) => setDistance(v)} />
-        <Input label="Start time" value={startTime} onChange={(v) => setStartTime(v)} />
-        <Input label="Duration" value={duration} onChange={(v) => setDuration(v)} />
+        <Input label="Distance (mi.)" value={distance} onChange={(v) => setDistance(v)} />
+        <Input label="Duration (min.)" value={duration} onChange={(v) => setDuration((Number(v) * 60).toString())} />
         <Button label="Submit" onClick={submitForm} />
       </div>
-
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid container justify="space-around">
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Start Date"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+          <KeyboardTimePicker
+            margin="normal"
+            id="time-picker"
+            label="Start Time"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change time',
+            }}
+          />
+        </Grid>
+      </MuiPickersUtilsProvider>
     </div>
   );
 };
