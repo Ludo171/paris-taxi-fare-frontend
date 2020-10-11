@@ -20,7 +20,7 @@ interface IProps { }
 const NewRideForm: React.FC<IProps> = () => {
   const { state, dispatch } = useContext(MainPageContext);
   const [distance, setDistance] = useState("");
-  const [startTime, setStartTime] = useState("");
+  const [startTime, setStartTime] = useState((new Date()).toISOString());
   const [duration, setDuration] = useState("");
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
 
