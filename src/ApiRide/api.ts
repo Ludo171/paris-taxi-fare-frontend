@@ -9,7 +9,6 @@ export const fetchAllRides = async () => {
     headers: { 'Content-Type': 'application/json' },
   })
     .then(res => {
-      console.log(res);
       return res.json();
     })
     .then(res => {

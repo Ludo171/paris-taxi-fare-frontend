@@ -19,6 +19,7 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
   const { dispatch } = useContext(MainPageContext);
 
   const handleDelete = async () => {
+
     const deletedCount = await deleteRide(info.id);
     console.log(deletedCount);
     if (deletedCount) {
@@ -27,8 +28,9 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
   }
 
   useEffect(() => {
+    if (info.price) return;
     fetchPrice();
-  }, [])
+  }, [info.price])
 
   const fetchPrice = async () => {
     const ridePrice = await fetchRidePrice({
@@ -37,7 +39,6 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
       startTime: info.startTime
     });
     if (ridePrice) {
-      console.log(`Got price ! ${ridePrice.amount}`);
       dispatch({ type: 'UPDATE_RIDE_PRICE', data: { rideId: info.id, newPrice: ridePrice.amount } });
     }
   }
@@ -46,13 +47,13 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
     <div className="ride-item">
       <div className="ride-info">
         <label className="underlined">Ride : {info.id}</label>
-        <label>Distance : {info.distance} miles</label>
+        <label>Distance : {Math.round(100 * info.distance) / 100} miles</label>
         <label>StartTime : {getFriendlyDate(info.startTime)}</label>
         <label>Duration : {getFriendlyDuration(info.duration)}</label>
       </div>
       <div className="price-tag">
         <label>Price : </label>
-        {info.price ? `${info.price}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
+        {info.price ? `${Math.round(100 * info.price) / 100}€` : <FontAwesomeIcon icon={faSpinner} color="grey" size="lg" spin />}
       </div>
       <Button label="Delete" icon={<FontAwesomeIcon icon={faMinusCircle} color="red" size="lg" />} onClick={handleDelete} />
     </div>

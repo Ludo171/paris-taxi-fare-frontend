@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { MainPageContext } from "../MainPage";
 import "./RidesList.scss";
 import Ride from "./Ride";
@@ -15,7 +15,13 @@ const RidesList: React.FC<IProps> = () => {
 
   const fetchRidesList = async () => {
     const list = await fetchAllRides();
-    dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: list } });
+    if (list !== undefined) {
+      const sorted = sortListBy(list, state.sortKey);
+      dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: sorted } });
+    }
+    clearTimeout();
+    const nextRefreshDelay = list === undefined ? 5 * 1000 : 2 * 60 * 1000; // Refresh the list every 2min
+    setTimeout(() => fetchRidesList(), nextRefreshDelay);
   }
 
   useEffect(() => {
