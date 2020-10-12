@@ -25,17 +25,27 @@
   
     scrollbar-width: thin;          /* "auto" or "thin"  */
     scrollbar-color: rgb(80, 102, 134) rgba(255, 166, 0, 0);   /* scroll thumb & track */
-    
-    -webkit-scrollbar {
-      width: 4px;               /* width of the entire scrollbar */
-    }
-    -webkit-scrollbar-track {
-      background: rgba(255, 166, 0, 0);        /* color of the tracking area */
-    }
-    -webkit-scrollbar-thumb {
-      background-color: rgb(80, 102, 134);    /* color of the scroll thumb */
-      border-radius: 5px;       /* roundness of the scroll thumb */
-      border: 3px solid rgba(255, 166, 0, 0);  /* creates padding around scroll thumb */
-    }
+  }
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+   
+  /* Track */
+  ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: rgba(126, 204, 240, 0.8); 
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(10, 34, 65, 0.4); 
   }
 }
+
