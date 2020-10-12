@@ -1,4 +1,4 @@
-# Paris Taxi Fare - Pricing Microservice - Frontend application
+# Paris Taxi Fare - Frontend application
 
 This react app demonstrates how microservices can be used to test and deploy new data services continuously.
 Here we present a new pricing service that serves  of a taxi ride.
