@@ -1,21 +1,33 @@
 import { adaptRide, parseNewRide } from "./adapter";
 
+const API_URL = process.env.NODE_ENV === "production" ?
+  process.env.REACT_APP_API_RIDES_PROD :
+  process.env.REACT_APP_API_RIDES_DEV;
+
+console.log(API_URL);
 
 export const fetchAllRides = async () => {
 
-  const url = `/rides`;
+  const url = `${API_URL}/rides`;
   const rides = await fetch(url, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
-    .then(res => {
-      return res.json();
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if (data) {
+        const cleanRides = data.map((ride: {}) => adaptRide(ride));
+        return cleanRides;
+      }
+      return [];
     })
-    .then(res => {
-      const cleanRides = res.map((ride: {}) => adaptRide(ride));
-      return cleanRides;
-    })
-    .catch((err) => console.error(err));
+    .catch(
+      (err) => {
+        console.log('ERRRRREEEUURUR');
+        console.log(err);
+      }
+    );
 
   return rides;
 };
@@ -24,7 +36,7 @@ export const createNewRide = async (newRideInfo: { duration: string, distance: s
   const ride = parseNewRide(newRideInfo);
   if (!ride) return;
 
-  const url = `/rides`;
+  const url = `${API_URL}/rides`;
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -42,7 +54,8 @@ export const createNewRide = async (newRideInfo: { duration: string, distance: s
 }
 
 export const deleteRide = async (rideId: string) => {
-  const url = `/rides/${rideId}`;
+
+  const url = `${API_URL}/rides/${rideId}`;
   const requestOptions = {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },

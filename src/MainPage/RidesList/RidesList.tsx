@@ -22,16 +22,16 @@ const RidesList: React.FC<IProps> = () => {
     clearTimeout();
     const nextRefreshDelay = list === undefined ? 5 * 1000 : 2 * 60 * 1000; // Refresh the list every 2min
     setTimeout(() => fetchRidesList(), nextRefreshDelay);
-  }
+  };
 
   useEffect(() => {
     fetchRidesList();
   }, []);
 
   useEffect(() => {
-    console.log(`New sort key ! ${state.sortKey}`);
     const sorted = sortListBy(state.ridesList, state.sortKey);
     dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: sorted } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.sortKey]);
 
 

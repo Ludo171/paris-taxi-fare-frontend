@@ -20,16 +20,10 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
   const handleDelete = async () => {
 
     const deletedCount = await deleteRide(info.id);
-    console.log(deletedCount);
     if (deletedCount) {
       dispatch({ type: 'REMOVE_RIDE', data: { rideId: info.id } });
     }
   }
-
-  useEffect(() => {
-    if (info.price) return;
-    fetchPrice();
-  }, [info.price])
 
   const fetchPrice = async () => {
     const ridePrice = await fetchRidePrice({
@@ -41,6 +35,12 @@ const Ride: React.FC<IProps> = ({ info }: IProps) => {
       dispatch({ type: 'UPDATE_RIDE_PRICE', data: { rideId: info.id, newPrice: ridePrice.amount } });
     }
   }
+
+  useEffect(() => {
+    if (info.price) return;
+    fetchPrice();
+  }, [info.price])
+
 
   return (
     <div className="ride-item">
