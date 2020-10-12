@@ -1,13 +1,12 @@
-import * as React from "react";
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { MainPageContext } from "../MainPage";
+import { deleteRide } from "../../ApiRides/api";
+import { fetchRidePrice } from "../../ApiPricing/api";
 import "./Ride.scss";
 import Button from "../../Components/Button";
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { deleteRide } from "../../ApiRide/api";
-import { fetchRidePrice } from "../../ApiPricing/api";
 
 
 interface IProps {

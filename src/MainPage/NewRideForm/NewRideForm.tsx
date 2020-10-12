@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
 import { MainPageContext } from "../MainPage";
-import "./NewRideForm.scss";
+import { createNewRide } from "../../ApiRides/api";
+import { IRide } from "../../ApiRides/interface";
 import Button from "../../Components/Button";
 import Input from "../../Components/Input";
-import { createNewRide } from "../../ApiRide/api";
-import { IRide } from "../../ApiRide/interface";
-import 'date-fns';
 import Grid from '@material-ui/core/Grid';
+import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -14,14 +13,16 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import "./NewRideForm.scss";
 
 interface IProps { }
 
 const NewRideForm: React.FC<IProps> = () => {
   const { state, dispatch } = useContext(MainPageContext);
+
   const [distance, setDistance] = useState("");
-  const [startTime, setStartTime] = useState((new Date()).toISOString());
   const [duration, setDuration] = useState("");
+  const [startTime, setStartTime] = useState((new Date()).toISOString());
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
 
   const submitForm = async () => {
@@ -36,8 +37,8 @@ const NewRideForm: React.FC<IProps> = () => {
       }
       dispatch({ type: 'ADD_NEW_RIDE', data: { newRide, index } });
       setDistance("");
-      setStartTime("");
       setDuration("");
+      setStartTime("");
       setSelectedDate(new Date());
     }
   };

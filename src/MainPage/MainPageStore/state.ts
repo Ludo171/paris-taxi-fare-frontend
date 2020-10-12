@@ -1,4 +1,4 @@
-import { IRide } from "../../ApiRide/interface";
+import { IRide } from "../../ApiRides/interface";
 import { RidesAction } from "./actions";
 
 export interface IMainPageContext {

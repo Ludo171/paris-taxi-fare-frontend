@@ -17,7 +17,6 @@ export const ridesReducer = (state: IMainPageState, action: RidesAction) => {
       const index = action.data.index || 0;
       const newRidesList = state.ridesList.slice();
       newRidesList.splice(index, 0, action.data.newRide);
-      console.log(newRidesList);
       return {
         ...state,
         ridesList: newRidesList

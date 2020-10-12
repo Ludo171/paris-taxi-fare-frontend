@@ -1,7 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import "./Input.scss";
-
 
 interface IProps {
   label: string;

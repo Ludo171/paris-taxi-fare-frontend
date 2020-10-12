@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from "react";
 import { MainPageContext } from "../MainPage";
-import "./RidesList.scss";
-import Ride from "./Ride";
-import Select from "../../Components/Select";
-import { fetchAllRides } from "../../ApiRide/api";
-import { IRide } from "../../ApiRide/interface";
 import { SORT_KEYS } from "../MainPageStore/state";
+import { fetchAllRides } from "../../ApiRides/api";
+import { IRide } from "../../ApiRides/interface";
+import Ride from "./Ride";
+import "./RidesList.scss";
+import Select from "../../Components/Select";
 
 
 interface IProps { }
@@ -66,6 +66,7 @@ const sortListBy = (ridesList: Array<IRide>, sortAttribute: string) => {
     if (sortAttribute === "duration") return compare(a.duration, b.duration);
     else if (sortAttribute === "distance") return compare(a.distance, b.distance);
     else if (sortAttribute === "startTime") return compare(a.startTime, b.startTime);
+    else if (sortAttribute === "price" && a.price && b.price) return compare(a.price, b.price);
     return compare(a.id, b.id);
   });
 

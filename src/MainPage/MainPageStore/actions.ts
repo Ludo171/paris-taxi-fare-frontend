@@ -1,4 +1,4 @@
-import { IRide } from "../../ApiRide/interface"
+import { IRide } from "../../ApiRides/interface"
 
 export interface UpdateRidesListAction {
   type: 'UPDATE_RIDES_LIST';
