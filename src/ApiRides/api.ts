@@ -4,8 +4,6 @@ const API_URL = process.env.NODE_ENV === "production" ?
   process.env.REACT_APP_API_RIDES_PROD :
   process.env.REACT_APP_API_RIDES_DEV;
 
-console.log(API_URL);
-
 export const fetchAllRides = async () => {
 
   const url = `${API_URL}/rides`;
@@ -15,7 +13,6 @@ export const fetchAllRides = async () => {
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if (data) {
         const cleanRides = data.map((ride: {}) => adaptRide(ride));
         return cleanRides;
@@ -24,8 +21,7 @@ export const fetchAllRides = async () => {
     })
     .catch(
       (err) => {
-        console.log('ERRRRREEEUURUR');
-        console.log(err);
+        console.error(err);
       }
     );
 
