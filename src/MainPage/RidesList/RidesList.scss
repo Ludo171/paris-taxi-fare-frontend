@@ -17,6 +17,22 @@
     justify-content: space-between;
   }
 
+  .list-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafafab7;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0;
+    font-size: large;
+    width: fit-content;
+    align-self: center;
+    span {
+      padding: 15px;
+    }
+  }
+  
   ul {
     display: flex;
     flex-direction: column;
