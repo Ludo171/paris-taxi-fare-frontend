@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { MainPageContext } from "../MainPage";
 import { SORT_KEYS } from "../MainPageStore/state";
 import { fetchAllRides } from "../../ApiRides/api";
@@ -6,18 +6,22 @@ import { IRide } from "../../ApiRides/interface";
 import Ride from "./Ride";
 import "./RidesList.scss";
 import Select from "../../Components/Select";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 interface IProps { }
 
 const RidesList: React.FC<IProps> = () => {
   const { state, dispatch } = useContext(MainPageContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchRidesList = async () => {
     const list = await fetchAllRides();
     if (list !== undefined) {
       const sorted = sortListBy(list, state.sortKey);
       dispatch({ type: 'UPDATE_RIDES_LIST', data: { rides: sorted } });
+      setIsLoading(false);
     }
     clearTimeout();
     const nextRefreshDelay = list === undefined ? 5 * 1000 : 2 * 60 * 1000; // Refresh the list every 2min
@@ -44,9 +48,18 @@ const RidesList: React.FC<IProps> = () => {
             dispatch({ type: 'UPDATE_SORT_KEY', data: { sortKey: v.toString() } });
           }}></Select>
       </div>
-      <ul>
-        {state.ridesList ? state.ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />) : null}
-      </ul>
+
+      {
+        isLoading ?
+          <div className="list-loader">
+            <span>Waking up API servers sleeping at Heroku ...</span>
+            <FontAwesomeIcon icon={faSpinner} color="grey" size="3x" spin />
+          </div>
+          :
+          <ul>
+            {state.ridesList ? state.ridesList.map((rideInfo, i) => <Ride info={rideInfo} key={i} />) : null}
+          </ul>
+      }
     </div>
   );
 };
