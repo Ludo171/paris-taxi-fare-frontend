@@ -8,6 +8,11 @@ available online : https://release.dgf5qv4kzkl2i.amplifyapp.com/
 
 ![API Diagram](./ArchitectureDiagrams/Diapositive1.PNG)
 
+**Precision:**  
+*A genuine 2-tier architecture would have consisted in integrating the Rides API into the client application. I chose to diverge a little from a pure 2-tier architecture for 2 reasons :*
+- Security : I wanted to deploy the architecture, and wanted to restrict the network access to the database. (plot-twist : getting a fixed IP on Heroku requires to pay...)
+- Skills demonstration : Demonstrate practical application of a node server structured as a -simple- REST API.
+
 ![API Diagram](./ArchitectureDiagrams/Diapositive2.PNG)
 
 ![API Diagram](./ArchitectureDiagrams/Diapositive3.PNG)
